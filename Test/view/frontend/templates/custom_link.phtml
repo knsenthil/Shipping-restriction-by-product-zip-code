@@ -1,0 +1,43 @@
+<li class="custom-li">
+   <a href="#" id="click-me"><?php echo __('New Item')?></a>
+</li>
+<div id="popup-modal" style="display:none">
+	<ul>
+    <?php
+	$collection = $this->getLatestProduct();
+	foreach ($collection as $product) { ?>
+		<li><a href="<?php echo $product->getProductUrl() ?>"><?php echo ucfirst($product->getName()); ?></a></li>
+	<?php } ?>
+	</ul>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'New Items',
+                buttons: [{
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-modal'));
+            $("#click-me").on('click',function(){ 
+                $("#popup-modal").modal("openModal");
+            });
+
+        }
+    );
+</script>
